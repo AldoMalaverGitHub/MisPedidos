@@ -2,6 +2,8 @@ package com.pedidos.pe.main;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.pedidos.pe.datos.entidades.Cliente;
 import com.pedidos.pe.datos.repository.ClienteRepository;
 import com.pedidos.pe.datos.repository.PedidoRepository;
+import com.pedidos.pe.negocio.ClienteNegocio;
+import com.pedidos.pe.negocio.dto.ClienteNegocioDTO;
 
 @SpringBootApplication
 @EntityScan(basePackages = "com.pedidos.pe.datos.entidades")
@@ -20,11 +24,9 @@ import com.pedidos.pe.datos.repository.PedidoRepository;
 @EnableJpaRepositories(basePackages = "com.pedidos.pe.datos.repository")
 public class PedidosMain implements CommandLineRunner {
 	
+	private static final Logger log = LoggerFactory.getLogger(PedidosMain.class);
 	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	@Autowired
-	private PedidoRepository pedidoRepository;
+	private ClienteNegocio clienteNegocio;
 
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(PedidosMain.class);
@@ -33,26 +35,14 @@ public class PedidosMain implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-//		Cliente cliente = new Cliente();
-//		cliente.setNombres("Aldo");
-//		cliente.setApellidos("Malaver");
-//		cliente.setCodigo("C0001");
-//		cliente.setEstado('1');
-//		clienteRepository.save(cliente);
+		log.info("ingresando");
 		
-		//programación declarativa
-		List<Cliente> clientes = clienteRepository.findAll();
-		for(Cliente cli: clientes){
-			System.out.println(cli.getIdcliente() + " " + cli.getNombres());
-		}
-		
-		//Programacion funcional -> flecha o arrow (se utiliza para lambdas)
-		clienteRepository.findAll().parallelStream().forEach(cl -> System.out.println(cl.getIdcliente() + " " + cl.getNombres()));
-		
-		clienteRepository.obtenerClientesPorCodigo("CLI00001", 'A').forEach(cl -> 
-		System.out.println(cl.getIdcliente() + " " + cl.getNombres()));
-		
-		pedidoRepository.obtenerPedidoPorIdCliente(1).forEach(pe ->
-		System.out.println(pe.getIdpedido() + "Nombre de cliente " +  pe.getCliente().getNombres()));
+		ClienteNegocioDTO clienteNegocioDTO = new ClienteNegocioDTO();
+		clienteNegocioDTO.setCodigo("CLI00002");
+		clienteNegocioDTO.setNombres("Carmen");
+		clienteNegocioDTO.setApellidos("Lezama");
+		clienteNegocio.guardarCliente(clienteNegocioDTO);
+		log.info("finalizado");
+	
 	}
 }

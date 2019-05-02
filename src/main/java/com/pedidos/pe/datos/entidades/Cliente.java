@@ -24,7 +24,7 @@ public class Cliente implements java.io.Serializable {
 	private String nombres;
 	private String apellidos;
 	private char estado;
-	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
+	//private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Cliente() {
 	}
@@ -34,12 +34,12 @@ public class Cliente implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	public Cliente(String codigo, String nombres, String apellidos, char estado, Set<Pedido> pedidos) {
+	public Cliente(String codigo, String nombres, String apellidos, char estado) {
 		this.codigo = codigo;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.estado = estado;
-		this.pedidos = pedidos;
+		
 	}
 
 	@Id
@@ -89,14 +89,4 @@ public class Cliente implements java.io.Serializable {
 	public void setEstado(char estado) {
 		this.estado = estado;
 	}
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
-	public Set<Pedido> getPedidos() {
-		return this.pedidos;
-	}
-
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
 }

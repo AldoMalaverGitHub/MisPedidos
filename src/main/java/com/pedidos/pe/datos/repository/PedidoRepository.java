@@ -12,6 +12,6 @@ import com.pedidos.pe.datos.entidades.Pedido;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
 
-	@Query("From Pedido p where p.cliente.idcliente = :idCliente")
-	List<Pedido> obtenerPedidoPorIdCliente(@Param("idCliente") Integer idCliente);
+	//@Query("From Pedido p where p.cliente.idcliente = :idCliente")
+	//List<Pedido> obtenerPedidoPorIdCliente(@Param("idCliente") Integer idCliente);
 }

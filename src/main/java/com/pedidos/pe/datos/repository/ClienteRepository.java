@@ -16,5 +16,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	@Query("From Cliente c where c.codigo = :codigo and c.estado = :estado")
 	List<Cliente> obtenerClientesPorCodigo(@Param("codigo") String codigo,
 			@Param("estado") char estado);
-
+	
 }
